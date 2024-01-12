@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TankModel
 {
-    private TankController tankController;
+    private TankController m_tankController;
 
     public TankModel()
     {
@@ -11,6 +11,6 @@ public class TankModel
 
     public void SetTankController(TankController controller)
     {
-        tankController = controller;
+        m_tankController = controller;
     }
 }

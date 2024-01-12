@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class TankSpawner : MonoBehaviour
 {
-    [SerializeField] private TankView tankView;
+    [SerializeField] private TankView m_tankView;
     void Start()
     {
-        if (tankView == null)
+        if (m_tankView == null)
             Debug.LogError("Tank Prefab is Empty\n");
 
         CreateTank(); // Tank instantiation is handled by TankController script
@@ -16,6 +16,6 @@ public class TankSpawner : MonoBehaviour
     private void CreateTank()
     {
         TankModel tankModel = new TankModel();
-        TankController tankController = new TankController(tankModel, tankView);
+        TankController tankController = new TankController(tankModel, m_tankView);
     }
 }
