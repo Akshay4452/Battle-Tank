@@ -34,4 +34,9 @@ public class TankController
             m_rb.MoveRotation(m_rb.rotation * deltaRotation);
         }
     }
+
+    public TankModel GetTankModel()
+    {
+        return m_tankModel;
+    }
 }

@@ -8,12 +8,14 @@ public class TankView : MonoBehaviour
     private TankController m_tankController;
     private float m_movement;
     private float m_rotation;
-    private float movementSpeed;
-    private float rotationSpeed;
+    
     // Start is called before the first frame update
     void Start()
     {
-        
+        Camera mainCam = Camera.main;
+        mainCam.transform.SetParent(transform);
+        mainCam.transform.position = new Vector3(0f, 3f, -4f); // Relative Position to Tank
+        mainCam.transform.rotation = Quaternion.Euler(15f, 0f, 0f);
     }
 
     // Update is called once per frame
@@ -29,11 +31,11 @@ public class TankView : MonoBehaviour
 
         if(m_movement != 0)
         {
-            m_tankController.Move(m_movement, 30); // Hard-coding movementSpeed for now. TankModel is supposed to hold this value
+            m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
         }
         if(m_rotation != 0)
         {
-            m_tankController.Rotate(m_rotation, 50); // Hard-coding rotationSpeed for now.
+            m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
         }
     }
 
