@@ -8,6 +8,8 @@ public class TankView : MonoBehaviour
     private TankController m_tankController;
     private float m_movement;
     private float m_rotation;
+
+    public MeshRenderer[] tankComponents;
     
     // Start is called before the first frame update
     void Start()
@@ -54,6 +56,14 @@ public class TankView : MonoBehaviour
         {
             Debug.LogError("Rigidbody couldn't be found on Tank\n");
             return null;
+        }
+    }
+
+    public void ChangeColor(Material color)
+    {
+        for (int i = 0; i < tankComponents.Length; i++)
+        {
+            tankComponents[i].material = color;
         }
     }
 }

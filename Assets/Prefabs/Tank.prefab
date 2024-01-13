@@ -334,6 +334,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82ded03ad7c0e2a42bfdda297986df58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tankComponents:
+  - {fileID: 7187670057775339356}
+  - {fileID: 7187670057775339354}
+  - {fileID: 7187670057775339348}
+  - {fileID: 7187670057775339358}
 --- !u!54 &6211274176389390648
 Rigidbody:
   m_ObjectHideFlags: 0
