@@ -21,14 +21,27 @@ public class TankSpawner : MonoBehaviour
     {
         if (m_tankView == null)
             Debug.LogError("Tank Prefab is Empty\n");
-
-        CreateTank(); // Tank instantiation is handled by TankController script
     }
 
-    private void CreateTank()
+    public void CreateTank(TankTypes tankType)
     {
-        // By default, Green Tank will spawn -> Currently there is no UI set
-        Tank tank = tankList[0];
+        Tank tank = null;
+        switch (tankType)
+        {
+            case TankTypes.GreenTank:
+                tank = tankList[0];
+                break;
+            case TankTypes.BlueTank:
+                tank = tankList[1];
+                break;
+            case TankTypes.RedTank:
+                tank = tankList[2];
+                break;
+            default:
+                tank = tankList[0];
+                break;
+        }
+
         TankModel tankModel = new TankModel(tank.movementSpeed, tank.rotationSpeed, tank.tankType, tank.color);
         TankController tankController = new TankController(tankModel, m_tankView);
     }
