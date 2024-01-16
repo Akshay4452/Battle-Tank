@@ -20,7 +20,10 @@ public class TankSpawner : MonoBehaviour
     void Start()
     {
         if (m_tankView == null)
-            Debug.LogError("Tank Prefab is Empty\n");
+        {
+            Debug.LogError("Tank Prefab is not Assigned in Tank Spawner\n");
+            return;
+        }
     }
 
     public void CreateTank(TankTypes tankType)

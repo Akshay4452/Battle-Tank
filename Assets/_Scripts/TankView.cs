@@ -14,6 +14,11 @@ public class TankView : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        if(tankComponents.Length == 0)
+        {
+            Debug.LogError("Mesh Renderers of Tank Components are Missing\n");
+            return;
+        }
         Camera mainCam = Camera.main;
         mainCam.transform.SetParent(transform);
         mainCam.transform.position = new Vector3(0f, 3f, -4f); // Relative Position to Tank
