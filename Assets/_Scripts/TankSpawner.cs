@@ -13,6 +13,7 @@ public class TankSpawner : MonoBehaviour
         public float rotationSpeed;
         public TankTypes tankType;
         public Material color;
+        public float fireDelay;
     }
 
     public List<Tank> tankList;
@@ -45,7 +46,7 @@ public class TankSpawner : MonoBehaviour
                 break;
         }
 
-        TankModel tankModel = new TankModel(tank.movementSpeed, tank.rotationSpeed, tank.tankType, tank.color);
+        TankModel tankModel = new TankModel(tank.movementSpeed, tank.rotationSpeed, tank.tankType, tank.color, tank.fireDelay);
         TankController tankController = new TankController(tankModel, m_tankView);
     }
 }
