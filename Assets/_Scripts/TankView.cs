@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.Android.Types;
 using UnityEngine;
 
 public class TankView : MonoBehaviour
@@ -13,7 +12,7 @@ public class TankView : MonoBehaviour
     [SerializeField] private Transform shellSpawn;
 
     public MeshRenderer[] tankComponents;
-    public GameObject shellPrefab;
+    public Shell shellPrefab;
 
     // Start is called before the first frame update
     void Start()
@@ -72,21 +71,7 @@ public class TankView : MonoBehaviour
 
     private void Fire()
     {
-        if (shellSpawn != null)
-        {
-            GameObject shellInstance = Instantiate(shellPrefab, shellSpawn.position, shellSpawn.rotation);
-            Physics.IgnoreCollision(shellInstance.GetComponent<Collider>(), shellSpawn.parent.GetComponent<Collider>());
-            //shellInstance.transform.parent = transform; // Making the shell child of tank gameobject
-
-            float forceMagnitude = m_tankController.GetTankModel().m_shellForce;
-            Rigidbody shell_rb = shellInstance.GetComponent<Rigidbody>();
-
-            shell_rb.AddForce(shellSpawn.forward * forceMagnitude, ForceMode.Impulse);
-        }
-        else
-        {
-            return;
-        }
+        m_tankController.FireShell();
     }
 
     public void SetTankController(TankController controller)
@@ -113,5 +98,10 @@ public class TankView : MonoBehaviour
         {
             tankComponents[i].material = color;
         }
+    }
+
+    public Transform GetShellSpawnTransform()
+    {
+        return shellSpawn;
     }
 }
