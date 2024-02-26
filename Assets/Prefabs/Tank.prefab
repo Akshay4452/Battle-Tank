@@ -372,7 +372,7 @@ MonoBehaviour:
   - {fileID: 7187670057775339354}
   - {fileID: 7187670057775339348}
   - {fileID: 7187670057775339358}
-  shellPrefab: {fileID: 6502165968005995892, guid: 7fabdd90306760e4b8f87dbe09cca9b2,
+  shellPrefab: {fileID: 3539449956479362690, guid: 7fabdd90306760e4b8f87dbe09cca9b2,
     type: 3}
 --- !u!54 &6211274176389390648
 Rigidbody:

@@ -10,7 +10,7 @@ public class TankController
     public TankController(TankModel model, TankView view)
     {
         m_tankModel = model;
-        m_tankView = GameObject.Instantiate<TankView>(view, Vector3.zero, Quaternion.identity); // Taking instance from Instantiated GameObject
+        m_tankView = GameObject.Instantiate<TankView>(view); // Taking instance from Instantiated GameObject
         m_rb = m_tankView.GetRigidbody();
 
         m_tankModel.SetTankController(this);
@@ -34,6 +34,28 @@ public class TankController
             Vector3 vector = new Vector3(0f, rotation * rotationSpeed, 0f);
             Quaternion deltaRotation = Quaternion.Euler(vector * Time.deltaTime);
             m_rb.MoveRotation(m_rb.rotation * deltaRotation);
+        }
+    }
+
+    public void FireShell()
+    {
+        if(m_tankView.GetShellSpawnTransform() != null)
+        {
+            Transform shellSpawn = m_tankView.GetShellSpawnTransform();
+            GameObject shellInstance = GameObject.Instantiate(m_tankView.shellPrefab.gameObject, shellSpawn.position, shellSpawn.rotation);
+
+            // Ignore collision between shell and tank
+            Physics.IgnoreCollision(shellInstance.GetComponent<Collider>(), m_tankView.GetComponent<Collider>());
+
+            float forceMagnitude = GetTankModel().m_shellForce;
+            Rigidbody shellRb = shellInstance.GetComponent<Rigidbody>();
+
+            shellRb.AddForce(shellSpawn.transform.forward * forceMagnitude, ForceMode.Impulse);
+        } 
+        else
+        {
+            Debug.LogError("Shell Spawn Transform Missing in TankView!");
+            return;
         }
     }
 

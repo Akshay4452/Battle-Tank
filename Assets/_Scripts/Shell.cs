@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Shell : MonoBehaviour
 {
-    private Vector3 fireDirection;
-    private Rigidbody rb;
     private float life; // Lifespan of bullet
     void Start()
     {
-        rb = GetComponent<Rigidbody>();
         life = 5f;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Destroy(gameObject); // Destroy bullet when hit to another object
     }
 
     private void Update()
