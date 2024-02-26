@@ -10,7 +10,7 @@ public class TankController
     public TankController(TankModel model, TankView view)
     {
         m_tankModel = model;
-        m_tankView = GameObject.Instantiate<TankView>(view); // Taking instance from Instantiated GameObject
+        m_tankView = GameObject.Instantiate<TankView>(view, Vector3.zero, Quaternion.identity); // Taking instance from Instantiated GameObject
         m_rb = m_tankView.GetRigidbody();
 
         m_tankModel.SetTankController(this);
