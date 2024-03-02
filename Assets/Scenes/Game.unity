@@ -300,8 +300,20 @@ MonoBehaviour:
   sounds:
   - soundType: 0
     clip: {fileID: 8300000, guid: f56e7022c60a90949835ffb6e1ac4f32, type: 3}
+    volume: 0.35
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - soundType: 1
+    clip: {fileID: 8300000, guid: f433dd47bae4e4db5a0518044da14a8d, type: 3}
     volume: 1
-    pitch: 0.63
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - soundType: 3
+    clip: {fileID: 8300000, guid: d9428063c609f6b4a8a498e40d0cb5c3, type: 3}
+    volume: 0.5
+    pitch: 1
     loop: 1
     source: {fileID: 0}
 --- !u!1 &1179543937

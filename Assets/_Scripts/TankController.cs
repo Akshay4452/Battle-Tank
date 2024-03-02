@@ -51,6 +51,8 @@ public class TankController
             Rigidbody shellRb = shellInstance.GetComponent<Rigidbody>();
 
             shellRb.AddForce(shellSpawn.transform.forward * forceMagnitude, ForceMode.Impulse);
+
+            AudioManager.Instance.Play(SoundType.TankFire);
         } 
         else
         {

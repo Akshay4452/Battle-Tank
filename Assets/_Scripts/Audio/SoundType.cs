@@ -4,7 +4,7 @@ public enum SoundType
     BackgroundMusic,
     TankFire,
     TankReload,
-    TankDamage,
+    TankIdle,
     TankDestroy,
     TankMovement
 }

@@ -41,6 +41,14 @@ public class AudioManager : MonoBehaviour
     public void Play(SoundType type)
     {
         Sound s = Array.Find(sounds, sound => sound.soundType == type);
-        s.source.Play();
+        if (type == SoundType.BackgroundMusic)
+        {
+            s.source.Play();
+        }
+        else
+        {
+            s.source.PlayOneShot(s.clip);
+        }
+        
     }
 }
