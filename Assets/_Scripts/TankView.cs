@@ -10,9 +10,11 @@ public class TankView : MonoBehaviour
     private float m_rotation;
     private bool m_bIsFired;
     [SerializeField] private Transform shellSpawn;
+    [SerializeField] private Transform shellFireSpawn;
 
     public MeshRenderer[] tankComponents;
     public Shell shellPrefab;
+    public ParticleSystem shellFireEffect;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +27,11 @@ public class TankView : MonoBehaviour
         if (shellPrefab == null)
         {
             Debug.LogError("Shell Prefab is missing in the inspector\n");
+            return;
+        }
+        if(shellFireEffect == null)
+        {
+            Debug.LogError("Shell Fire Effect particle system is missing in the inspector\n");
             return;
         }
         Camera mainCam = Camera.main;
@@ -54,24 +61,28 @@ public class TankView : MonoBehaviour
         if (m_movement != 0)
         {
             m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
+
         }
+
         if (m_rotation != 0)
         {
             m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
         }
-    }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Shell")
+        if (m_movement == 0)
         {
-            collision.gameObject.GetComponent<Collider>().isTrigger = true;
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
+                AudioManager.Instance.Stop(SoundType.TankMovement);
+            else
+                return;
         }
     }
 
     private void Fire()
     {
         m_tankController.FireShell();
+        GameObject fireEffect = Instantiate(shellFireEffect.gameObject, shellFireSpawn.position, shellFireSpawn.rotation);
+        Destroy(fireEffect, 0.5f);
     }
 
     public void SetTankController(TankController controller)

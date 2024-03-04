@@ -234,7 +234,7 @@ MonoBehaviour:
     color: {fileID: 2100000, guid: ff21ff0ea9b18924bb1fdfbb0e58f5cb, type: 2}
     fireDelay: 0.25
   - movementSpeed: 60
-    rotationSpeed: 120
+    rotationSpeed: 100
     tankType: 2
     color: {fileID: 2100000, guid: 463052f3f7389124f9e7b34b0b931d0d, type: 2}
     fireDelay: 0.5
@@ -305,7 +305,7 @@ MonoBehaviour:
     loop: 1
     source: {fileID: 0}
   - soundType: 1
-    clip: {fileID: 8300000, guid: f433dd47bae4e4db5a0518044da14a8d, type: 3}
+    clip: {fileID: 8300000, guid: baecd972961f8704eacb7a90ef298994, type: 3}
     volume: 1
     pitch: 1
     loop: 0
@@ -314,6 +314,12 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: d9428063c609f6b4a8a498e40d0cb5c3, type: 3}
     volume: 0.5
     pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - soundType: 5
+    clip: {fileID: 8300000, guid: 80a7d56039b00c944bc36e4a1508ec54, type: 3}
+    volume: 0.388
+    pitch: 0.75
     loop: 1
     source: {fileID: 0}
 --- !u!1 &1179543937

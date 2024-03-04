@@ -24,6 +24,11 @@ public class TankController
         if(m_rb != null)
         {
             m_rb.velocity = m_tankView.transform.forward * movement * movementSpeed;
+
+            if (!AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
+            {
+                AudioManager.Instance.Play(SoundType.TankMovement);
+            }
         }
     }
 

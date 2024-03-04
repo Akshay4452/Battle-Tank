@@ -16,4 +16,15 @@ public class Sound
 
     [HideInInspector]
     public AudioSource source;
+    private bool isSoundPlaying = false;
+
+    public void SetSoundPlayState(bool state)
+    {
+        isSoundPlaying = state;
+    }
+
+    public bool GetSoundPlayState()
+    {
+        return isSoundPlaying;
+    }
 }
