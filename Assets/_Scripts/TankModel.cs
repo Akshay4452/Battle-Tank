@@ -25,4 +25,9 @@ public class TankModel
     {
         m_tankController = controller;
     }
+
+    public float GetFireDelay()
+    {
+        return m_fireDelay;
+    }
 }
