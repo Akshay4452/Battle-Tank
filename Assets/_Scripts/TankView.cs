@@ -47,9 +47,9 @@ public class TankView : MonoBehaviour
 
         // If LMB is pressed => Fire the shell
         m_bIsFired = Input.GetMouseButtonDown(0);
-        if (m_bIsFired)
+        if (m_bIsFired && m_movement == 0)
         {
-            Fire();
+            Fire(); // Fire only when tank is stationary
         }
     }
 
@@ -69,13 +69,19 @@ public class TankView : MonoBehaviour
             m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
         }
 
+        if (m_rotation == 0)
+        {
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
+                AudioManager.Instance.Stop(SoundType.TankTurretRotate);
+        }
+
         if (m_movement == 0)
         {
             if (AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
                 AudioManager.Instance.Stop(SoundType.TankMovement);
-            else
-                return;
         }
+
+        
     }
 
     private void Fire()

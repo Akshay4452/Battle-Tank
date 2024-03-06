@@ -59,6 +59,10 @@ public class AudioManager : MonoBehaviour
                     s.source.Play();
                     s.SetSoundPlayState(true);
                     break;
+                case SoundType.TankTurretRotate:
+                    s.source.Play();
+                    s.SetSoundPlayState(true);
+                    break;
                 default:
                     s.source.PlayOneShot(s.clip);
                     break;
@@ -82,6 +86,10 @@ public class AudioManager : MonoBehaviour
                     s.SetSoundPlayState(false);
                     break;
                 case SoundType.TankMovement:
+                    s.source.Stop();
+                    s.SetSoundPlayState(false);
+                    break;
+                case SoundType.TankTurretRotate:
                     s.source.Stop();
                     s.SetSoundPlayState(false);
                     break;

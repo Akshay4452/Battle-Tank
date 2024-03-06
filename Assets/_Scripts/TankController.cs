@@ -40,6 +40,11 @@ public class TankController
             Quaternion deltaRotation = Quaternion.Euler(vector * Time.deltaTime);
             m_rb.MoveRotation(m_rb.rotation * deltaRotation);
         }
+
+        if (!AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
+        {
+            AudioManager.Instance.Play(SoundType.TankTurretRotate);
+        }
     }
 
     public void FireShell()
