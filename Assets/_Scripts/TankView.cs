@@ -10,9 +10,13 @@ public class TankView : MonoBehaviour
     private float m_rotation;
     private bool m_bIsFired;
     [SerializeField] private Transform shellSpawn;
+    [SerializeField] private Transform shellFireSpawn;
 
     public MeshRenderer[] tankComponents;
     public Shell shellPrefab;
+    public ParticleSystem shellFireEffect;
+
+    private float timer;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +31,11 @@ public class TankView : MonoBehaviour
             Debug.LogError("Shell Prefab is missing in the inspector\n");
             return;
         }
+        if(shellFireEffect == null)
+        {
+            Debug.LogError("Shell Fire Effect particle system is missing in the inspector\n");
+            return;
+        }
         Camera mainCam = Camera.main;
         mainCam.transform.SetParent(transform);
         mainCam.transform.position = new Vector3(0f, 3f, -4f); // Relative Position to Tank
@@ -38,41 +47,15 @@ public class TankView : MonoBehaviour
     {
         Movement();
 
+        timer += Time.deltaTime;
         // If LMB is pressed => Fire the shell
-        m_bIsFired = Input.GetMouseButtonDown(0);
-        if (m_bIsFired)
+        //m_bIsFired = Input.GetMouseButtonDown(0);
+        if (CanShoot(timer))
         {
-            Fire();
+            Fire(); // Fire only when tank is stationary
+            timer = 0f;
         }
-    }
-
-    private void Movement()
-    {
-        m_movement = Input.GetAxis("Vertical");
-        m_rotation = Input.GetAxis("Horizontal");
-
-        if (m_movement != 0)
-        {
-            m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
-        }
-        if (m_rotation != 0)
-        {
-            m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Shell")
-        {
-            collision.gameObject.GetComponent<Collider>().isTrigger = true;
-        }
-    }
-
-    private void Fire()
-    {
-        m_tankController.FireShell();
-    }
+    }   
 
     public void SetTankController(TankController controller)
     {
@@ -103,5 +86,53 @@ public class TankView : MonoBehaviour
     public Transform GetShellSpawnTransform()
     {
         return shellSpawn;
+    }
+
+    private void Movement()
+    {
+        m_movement = Input.GetAxis("Vertical");
+        m_rotation = Input.GetAxis("Horizontal");
+
+        if (m_movement != 0)
+        {
+            m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
+
+        }
+
+        if (m_rotation != 0)
+        {
+            m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
+        }
+
+        if (m_rotation == 0)
+        {
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
+                AudioManager.Instance.Stop(SoundType.TankTurretRotate);
+        }
+
+        if (m_movement == 0)
+        {
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
+                AudioManager.Instance.Stop(SoundType.TankMovement);
+        }
+
+
+    }
+    private void Fire()
+    {
+        m_tankController.FireShell();
+        GameObject fireEffect = Instantiate(shellFireEffect.gameObject, shellFireSpawn.position, shellFireSpawn.rotation);
+        Destroy(fireEffect, 0.5f);
+    }
+
+    private bool IsTankMoving()
+    {
+        if(m_movement != 0) { return true; }
+        else { return false; }
+    }
+
+    private bool CanShoot(float timer)
+    {
+        return Input.GetMouseButtonDown(0) && !IsTankMoving() && timer > m_tankController.GetTankModel().GetFireDelay();
     }
 }

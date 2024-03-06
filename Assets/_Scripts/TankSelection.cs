@@ -18,17 +18,20 @@ public class TankSelection : MonoBehaviour
     {
         tankSpawner.CreateTank(TankTypes.GreenTank);
         this.gameObject.SetActive(false);
+        AudioManager.Instance.Play(SoundType.TankIdle);
     }
 
     public void BlueTankSelected()
     {
         tankSpawner.CreateTank(TankTypes.BlueTank);
         this.gameObject.SetActive(false);
+        AudioManager.Instance.Play(SoundType.TankIdle);
     }
 
     public void RedTankSelected()
     {
         tankSpawner.CreateTank(TankTypes.RedTank);
         this.gameObject.SetActive(false);
+        AudioManager.Instance.Play(SoundType.TankIdle);
     }
 }

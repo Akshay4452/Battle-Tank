@@ -24,6 +24,11 @@ public class TankController
         if(m_rb != null)
         {
             m_rb.velocity = m_tankView.transform.forward * movement * movementSpeed;
+
+            if (!AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
+            {
+                AudioManager.Instance.Play(SoundType.TankMovement);
+            }
         }
     }
 
@@ -34,6 +39,11 @@ public class TankController
             Vector3 vector = new Vector3(0f, rotation * rotationSpeed, 0f);
             Quaternion deltaRotation = Quaternion.Euler(vector * Time.deltaTime);
             m_rb.MoveRotation(m_rb.rotation * deltaRotation);
+        }
+
+        if (!AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
+        {
+            AudioManager.Instance.Play(SoundType.TankTurretRotate);
         }
     }
 
@@ -51,6 +61,8 @@ public class TankController
             Rigidbody shellRb = shellInstance.GetComponent<Rigidbody>();
 
             shellRb.AddForce(shellSpawn.transform.forward * forceMagnitude, ForceMode.Impulse);
+
+            AudioManager.Instance.Play(SoundType.TankFire);
         } 
         else
         {
