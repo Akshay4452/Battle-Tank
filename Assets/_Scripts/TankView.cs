@@ -16,8 +16,6 @@ public class TankView : MonoBehaviour
     public Shell shellPrefab;
     public ParticleSystem shellFireEffect;
 
-    private float timer;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -47,14 +45,11 @@ public class TankView : MonoBehaviour
     {
         Movement();
 
-        timer += Time.deltaTime;
         // If LMB is pressed => Fire the shell
-        m_bIsFired = Input.GetMouseButtonDown(0);  
-        
-        if(m_bIsFired && !IsTankMoving() && timer > m_tankController.GetTankModel().GetFireDelay())
+        m_bIsFired = Input.GetMouseButtonDown(0);
+        if (m_bIsFired && m_movement == 0)
         {
             Fire(); // Fire only when tank is stationary
-            timer = 0f;
         }
     }
 
@@ -125,16 +120,5 @@ public class TankView : MonoBehaviour
     public Transform GetShellSpawnTransform()
     {
         return shellSpawn;
-    }
-
-    //private bool CanFire()
-    //{
-
-    //}
-
-    private bool IsTankMoving()
-    {
-        if (m_movement > 0) { return true; }
-        else { return false; }
     }
 }

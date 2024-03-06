@@ -300,7 +300,7 @@ MonoBehaviour:
   sounds:
   - soundType: 0
     clip: {fileID: 8300000, guid: f56e7022c60a90949835ffb6e1ac4f32, type: 3}
-    volume: 0.2
+    volume: 0.35
     pitch: 1
     loop: 1
     source: {fileID: 0}
