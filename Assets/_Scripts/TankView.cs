@@ -16,6 +16,8 @@ public class TankView : MonoBehaviour
     public Shell shellPrefab;
     public ParticleSystem shellFireEffect;
 
+    private float timer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,51 +47,15 @@ public class TankView : MonoBehaviour
     {
         Movement();
 
+        timer += Time.deltaTime;
         // If LMB is pressed => Fire the shell
-        m_bIsFired = Input.GetMouseButtonDown(0);
-        if (m_bIsFired && m_movement == 0)
+        //m_bIsFired = Input.GetMouseButtonDown(0);
+        if (CanShoot(timer))
         {
             Fire(); // Fire only when tank is stationary
+            timer = 0f;
         }
-    }
-
-    private void Movement()
-    {
-        m_movement = Input.GetAxis("Vertical");
-        m_rotation = Input.GetAxis("Horizontal");
-
-        if (m_movement != 0)
-        {
-            m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
-
-        }
-
-        if (m_rotation != 0)
-        {
-            m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
-        }
-
-        if (m_rotation == 0)
-        {
-            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
-                AudioManager.Instance.Stop(SoundType.TankTurretRotate);
-        }
-
-        if (m_movement == 0)
-        {
-            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
-                AudioManager.Instance.Stop(SoundType.TankMovement);
-        }
-
-        
-    }
-
-    private void Fire()
-    {
-        m_tankController.FireShell();
-        GameObject fireEffect = Instantiate(shellFireEffect.gameObject, shellFireSpawn.position, shellFireSpawn.rotation);
-        Destroy(fireEffect, 0.5f);
-    }
+    }   
 
     public void SetTankController(TankController controller)
     {
@@ -120,5 +86,53 @@ public class TankView : MonoBehaviour
     public Transform GetShellSpawnTransform()
     {
         return shellSpawn;
+    }
+
+    private void Movement()
+    {
+        m_movement = Input.GetAxis("Vertical");
+        m_rotation = Input.GetAxis("Horizontal");
+
+        if (m_movement != 0)
+        {
+            m_tankController.Move(m_movement, m_tankController.GetTankModel().m_movementSpeed);
+
+        }
+
+        if (m_rotation != 0)
+        {
+            m_tankController.Rotate(m_rotation, m_tankController.GetTankModel().m_rotationSpeed);
+        }
+
+        if (m_rotation == 0)
+        {
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankTurretRotate))
+                AudioManager.Instance.Stop(SoundType.TankTurretRotate);
+        }
+
+        if (m_movement == 0)
+        {
+            if (AudioManager.Instance.IsSoundPlaying(SoundType.TankMovement))
+                AudioManager.Instance.Stop(SoundType.TankMovement);
+        }
+
+
+    }
+    private void Fire()
+    {
+        m_tankController.FireShell();
+        GameObject fireEffect = Instantiate(shellFireEffect.gameObject, shellFireSpawn.position, shellFireSpawn.rotation);
+        Destroy(fireEffect, 0.5f);
+    }
+
+    private bool IsTankMoving()
+    {
+        if(m_movement != 0) { return true; }
+        else { return false; }
+    }
+
+    private bool CanShoot(float timer)
+    {
+        return Input.GetMouseButtonDown(0) && !IsTankMoving() && timer > m_tankController.GetTankModel().GetFireDelay();
     }
 }
